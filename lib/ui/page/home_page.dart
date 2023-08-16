@@ -14,6 +14,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double valor = 0.0;
+  String squareColor = "79155B";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +23,46 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
           child: Column(
         children: [
           IconButton(
-              onPressed: null, icon: Icon(Icons.refresh), key: Key('Refresh')),
+              onPressed: reset, icon: Icon(Icons.refresh), key: Key('Refresh')),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[W1(), W2(), W3()],
+            children: <Widget>[
+              W1(
+                value: valor,
+                update: update,
+              ),
+              W2(
+                color: squareColor,
+              ),
+              W3(
+                value: valor,
+                update: update,
+              )
+            ],
           ),
         ],
       )),
     );
+  }
+
+  void update(double value) {
+    setState(() {
+      valor = value;
+      if (value - value.truncate() <= 0.4) {
+        squareColor = "79155B";
+      } else {
+        squareColor = "FFBA86";
+      }
+    });
+  }
+
+  void reset() {
+    setState(() {
+      valor = 0.0;
+    });
   }
 }
